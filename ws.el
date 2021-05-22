@@ -1,54 +1,10 @@
 ;;-------------------------------------------------------------------------
-;; ws.el: emacs の キーバインドをWordStar like に設定するためのマクロ
+;; ws.el: emacs の キーバインドをWordStar like に設定する
 ;;
-;;    Copyright (C) 2000 ISHIKAWA Toshikazu.
+;;    Copyright (C) 2021 ISHIKAWA Toshikazu.
 ;;					石川寿一
-;;					NBE01004@niftyserve.or.jp
-;;					toshik@st.rim.or.jp
+;;					tosh@i.nifty.jp
 ;; 
-;; 
-;; ws.el is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
-;; any later version.
-;;
-;; ws.el はフリーソフトウェアであり、Free Software Foundation によっ
-;; て発行されている、GNU General Public License の version 2、または (あ
-;; なたがそれを選ぶなら) それ以降のバージョンに従って、再配布及び修正す
-;; ることができる。 
-;; 
-;; ws.el is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; ws.el は、それが役に立つことを期待して配布されるが、*無保証*である。
-;; ここで言う「無保証」とは、市場価値の保証及び特定の目的に合うことも保
-;; 証されないことも含まれる。詳しくは GNU General Public License を参照
-;; のこと。
-;; 
-;; You should have received a copy of the GNU General Public License
-;; along with ws.el; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA. 
-;; 
-;; あなたは、ws.el と共に配布される GNU General Public License のコ
-;; ピーを受け取ることができる。COPYING ファイルを参照のこと。もし含まれ
-;; ていないなら以下に手紙を書くこと。
-;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
-;;
-;;-------------------------------------------------------------------------
-;;
-;; keyboard-translate-table を書き変えてしまうので、
-;; 標準の構成の時は問題ありませんが、
-;; オプションの lisp プログラムを使ってるとアタマがウニになります。
-;;
-;; 世の中には emacs のキーバインディングが嫌いだが、
-;; emacs の機能は使いたいという変わり者がいて (こいつだけかもしんない >をれ)
-;; そういう人のために作りました。
-;; 良かったら使ってみて下さい。
-;;
 ;;-------------------------------------------------------------------------
 
 (defvar WordStar t)
@@ -60,7 +16,7 @@
 	   (keyboard-translate ?\^c ?\^e)	; ^C ^E
 	   (keyboard-translate ?\^d ?\^f)	; ^D ^F
 	   (keyboard-translate ?\^e ?\^p)	; ^E ^P
-	   (keyboard-translate ?\^f 29)		; ^F ^]
+	   (keyboard-translate ?\^f 29)	; ^F ^]
 	   (keyboard-translate ?\^g ?\^d)	; ^G ^D
 	   (keyboard-translate ?\^h 127)	; ^H DEL
 	   (keyboard-translate ?\^j ?\^h)	; LFD ^H
