@@ -35,22 +35,6 @@
 ;;
 ;;-------- 関数定義 --------------------------
 ;
-
-;; (require 'keisen-setup)
-;; 
-;; (defun ws-keisen-mode ()
-;;   "罫線モードはpictureモードの拡張で、M-[pnbf]で上下左右方向に
-;; 罫線を引きながら移動することができる。変数keisen-widthの値が
-;; 1のときは細い罫線、2以上のときは太い罫線を引く。"
-;;   (interactive)
-;;   (picture-mode)
-;;   (define-key picture-mode-map "\M-d" 'keisen-right-move)
-;;   (define-key picture-mode-map "\M-s" 'keisen-left-move)
-;;   (define-key picture-mode-map "\M-e" 'keisen-up-move)
-;;   (define-key picture-mode-map "\M-x" 'keisen-down-move)
-;;   (define-key picture-mode-map "\M-w" 'keisen-toggle-width)
-;;   )
-
 ;;
 ;; quail-mode
 ;; quail を無効化する。
