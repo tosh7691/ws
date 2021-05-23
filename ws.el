@@ -7,60 +7,31 @@
 ;; 
 ;;-------------------------------------------------------------------------
 
-(defvar WordStar t)
+;; (defvar WordStar t) ;; byte-compile時、「lacks a prefix」とWarning
 ;;
 ;;--------  keyboard-translate-table の変更 --
 ;;
-(if (boundp `xemacs-betaname)
-    (progn (keyboard-translate ?\^b ?\^s)	; ^B ^S
-	   (keyboard-translate ?\^c ?\^e)	; ^C ^E
-	   (keyboard-translate ?\^d ?\^f)	; ^D ^F
-	   (keyboard-translate ?\^e ?\^p)	; ^E ^P
-	   (keyboard-translate ?\^f 29)	; ^F ^]
-	   (keyboard-translate ?\^g ?\^d)	; ^G ^D
-	   (keyboard-translate ?\^h 127)	; ^H DEL
-	   (keyboard-translate ?\^j ?\^h)	; LFD ^H
-	   (keyboard-translate ?\^k ?\^y)	; ^K ^Y
-	   (keyboard-translate ?\^n ?\^o)	; ^N ^O
-	   (keyboard-translate 27 ?\^g)		; ESC ^G
-	   (keyboard-translate ?\^o ?\^c)	; ^O ^C
-	   (keyboard-translate ?\^p ?\^x)	; ^P ^X
-	   (keyboard-translate ?\^q 28)		; ^Q ^\
-	   (keyboard-translate ?\^s ?\^b)	; ^S ^B
-	   (keyboard-translate ?\^x ?\^n)	; ^X ^N
-	   (keyboard-translate ?\^y ?\^k)	; ^Y ^K
-	   (keyboard-translate ?\^n ?\^o)	; ^N ^O
-	   (keyboard-translate 28 ?\^q)		; ^\ ^q
-	   (keyboard-translate 29 27)		; ^] ESC
-	   (keyboard-translate 127 ?\^j))	; DEL LFD
-  (let ((the-table (make-string 128 0)))
-       (let ((i 0))
-	 (while (< i 128)
-	   (aset the-table i i)
-	   (setq i (1+ i))))
-       (aset the-table ?\^b ?\^s)		; ^B ^S
-       (aset the-table ?\^c ?\^e)		; ^C ^E
-       (aset the-table ?\^d ?\^f)		; ^D ^F
-       (aset the-table ?\^e ?\^p)		; ^E ^P
-       (aset the-table ?\^f 29)			; ^F ^]
-       (aset the-table ?\^g ?\^d)		; ^G ^D
-       (aset the-table ?\^h 127)		; ^H DEL
-       (aset the-table ?\^j ?\^h)		; LFD ^H
-       (aset the-table ?\^k ?\^y)		; ^K ^Y
-       (aset the-table ?\^n ?\^o)		; ^N ^O
-       (aset the-table 27 ?\^g)			; ESC ^G
-       (aset the-table ?\^o ?\^c)		; ^O ^C
-       (aset the-table ?\^p ?\^x)		; ^P ^X
-       (aset the-table ?\^q 28)			; ^Q ^\
-       (aset the-table ?\^s ?\^b)		; ^S ^B
-       (aset the-table ?\^x ?\^n)		; ^X ^N
-       (aset the-table ?\^y ?\^k)		; ^Y ^K
-       (aset the-table ?\^n ?\^o)		; ^N ^O
-       (aset the-table 28 ?\^q)			; ^\ ^q
-       (aset the-table 29 27)			; ^] ESC
-       (aset the-table 127 ?\^j)		; DEL LFD
-       (setq keyboard-translate-table the-table))
-)
+(keyboard-translate ?\^c ?\^e)		; ^C ^E
+(keyboard-translate ?\^d ?\^f)		; ^D ^F
+(keyboard-translate ?\^e ?\^p)		; ^E ^P
+(keyboard-translate ?\^f 29)		; ^F ^]
+(keyboard-translate ?\^g ?\^d)		; ^G ^D
+(keyboard-translate ?\^h 127)		; ^H DEL
+(keyboard-translate ?\^j ?\^h)		; LFD ^H
+(keyboard-translate ?\^k ?\^y)		; ^K ^Y
+(keyboard-translate ?\^n ?\^o)		; ^N ^O
+(keyboard-translate 27 ?\^g)		; ESC ^G
+(keyboard-translate ?\^o ?\^c)		; ^O ^C
+(keyboard-translate ?\^p ?\^x)		; ^P ^X
+(keyboard-translate ?\^q 28)		; ^Q ^\
+(keyboard-translate ?\^s ?\^b)		; ^S ^B
+(keyboard-translate ?\^x ?\^n)		; ^X ^N
+(keyboard-translate ?\^y ?\^k)		; ^Y ^K
+(keyboard-translate ?\^n ?\^o)		; ^N ^O
+(keyboard-translate 28 ?\^q)		; ^\ ^q
+(keyboard-translate 29 27)		; ^] ESC
+(keyboard-translate 127 ?\^j)		; DEL LFD
+
 ;;
 ;;-------- 関数定義 --------------------------
 ;
@@ -249,8 +220,8 @@ ws-end-of-line の場合にはカーソルが水平に移動する."
 virtual line に行くように変更するための lisp 関数"
   (interactive "p")
   (let ((cur-col
-         (- (current-column)
-            (save-excursion (vertical-motion 0) (current-column)))))
+	 (- (current-column)
+	    (save-excursion (vertical-motion 0) (current-column)))))
     (vertical-motion (- n))
     (move-to-column (+ (current-column) cur-col))))
 ;;
@@ -262,8 +233,8 @@ virtual line に行くように変更するための lisp 関数"
 line に行くように変更するための lisp 関数"
   (interactive "p")
   (let ((cur-col
-         (- (current-column)
-            (save-excursion (vertical-motion 0) (current-column)))))
+	 (- (current-column)
+	    (save-excursion (vertical-motion 0) (current-column)))))
     (vertical-motion n)
     (move-to-column (+ (current-column) cur-col))))
 ;;
@@ -287,15 +258,15 @@ line に行くように変更するための lisp 関数"
 (define-key ctl-b-map "\C-s" 'fill-region)		; ^B^B
 ;;(define-key ctl-b-map "\C-e" ')			; ^B^C
 ;;(define-key ctl-b-map "\C-f" ')			; ^B^D
-;;(define-key ctl-b-map "\C-p" ')			; ^B^E��
+;;(define-key ctl-b-map "\C-p" ')			; ^B^E
 ;;(define-key ctl-b-map "\C-]" ')			; ^B^F
 ;;(define-key ctl-b-map "\C-f" ')			; ^B^G
 ;;(define-key ctl-b-map "\177" ')			; ^B^H
-;;(define-key ctl-b-map "\t"   ')		    	; ^B^I
+;;(define-key ctl-b-map "\t"   ')			; ^B^I
 ;;(define-key ctl-b-map "\C-j" ')			; ^B^J
 ;;(define-key ctl-b-map "\C-y" )			; ^B^K
 ;;(define-key ctl-b-map "\C-l" ')			; ^B^L
-;;(define-key ctl-b-map "\C-m" ')		    	; ^B^M
+;;(define-key ctl-b-map "\C-m" ')			; ^B^M
 ;;(define-key ctl-b-map "\C-o" ')			; ^B^N
 ;;(define-key ctl-b-map "\C-c" ')			; ^B^O
 ;;(define-key ctl-b-map "\C-x" ')			; ^B^P
@@ -305,14 +276,14 @@ line に行くように変更するための lisp 関数"
 ;;(define-key ctl-b-map "\C-t" ')			; ^B^T
 ;;(define-key ctl-b-map "\C-u" )			; ^B^U
 ;;(define-key ctl-b-map "\C-v" ')			; ^B^V
-;;(define-key ctl-b-map "\C-w" ')		    	; ^B^W
+;;(define-key ctl-b-map "\C-w" ')			; ^B^W
 ;;(define-key ctl-b-map "\C-n" ')			; ^B^X
 ;;(define-key ctl-b-map "\C-k" ')			; ^B^Y
-;;(define-key ctl-b-map "\C-z" ')		    	; ^B^Z
+;;(define-key ctl-b-map "\C-z" ')			; ^B^Z
 ;;(define-key ctl-b-map "\C-j" ')			; ^B^\
-;;(define-key ctl-b-map "\C-g" ')		    	; ^B ESC
-;;(define-key ctl-b-map "\027" ')		    	; ^B^]
-;;(define-key ctl-b-map "\036" ')		    	; ^B^^
+;;(define-key ctl-b-map "\C-g" ')			; ^B ESC
+;;(define-key ctl-b-map "\027" ')			; ^B^]
+;;(define-key ctl-b-map "\036" ')			; ^B^^
 ;;
 ;;; ^K キーマップ
 ;;;
@@ -321,21 +292,21 @@ line に行くように変更するための lisp 関数"
 (define-key ctl-k-map "f"    'crear-rectangle)			; ^Kf
 (define-key ctl-k-map "n"    'switch-to-next-buffer)		; ^Kn
 (define-key ctl-k-map "o"    'open-rectangle)			; ^Ko
-(define-key ctl-k-map "p"    'lpr-region)                       ; ^Kp
-;;(define-key ctl-k-map "r"    rm-map)                          ; ^Kr
-(define-key ctl-k-map "y"    'delete-rectangle)			; ^Ky
+(define-key ctl-k-map "p"    'lpr-region)			; ^Kp
+;;(define-key ctl-k-map "r"    rm-map)				; ^Kr
+(define-key ctl-k-map "y"    'delete-rectangle)		; ^Ky
 (define-key ctl-k-map "x"    'find-alternate-file)		; ^Kx
 (define-key ctl-k-map "="    'count-lines-resion)		; ^K=
 (define-key ctl-k-map "("    'start-kbd-macro)			; ^K(
 (define-key ctl-k-map ")"    'end-kbd-macro)			; ^K)
 (define-key ctl-k-map "\C-a" 'save-some-buffers)		; ^K^A
-(define-key ctl-k-map "\C-s" 'set-mark-command)			; ^K^B
+(define-key ctl-k-map "\C-s" 'set-mark-command)		; ^K^B
 (define-key ctl-k-map "\C-e" 'yank)				; ^K^C
 (define-key ctl-k-map "\C-f" 'save-buffers-kill-emacs)		; ^K^D
 (define-key ctl-k-map "\C-p" 'set-visited-file-name)		; ^K^E
 (define-key ctl-k-map "\C-]" 'shell)				; ^K^F
-;;(define-key ctl-k-map "\C-f" ')			    	; ^K^G
-;;(define-key ctl-k-map "\177" ')			    	; ^K^H
+;;(define-key ctl-k-map "\C-f" ')				; ^K^G
+;;(define-key ctl-k-map "\177" ')				; ^K^H
 (define-key ctl-k-map "\C-i" 'yank-rectangle)			; ^K^I
 (define-key ctl-k-map "\C-h" 'auto-fill-mode)			; ^K^J
 (define-key ctl-k-map "\C-y" 'copy-region-as-kill)		; ^K^K
@@ -343,21 +314,21 @@ line に行くように変更するための lisp 関数"
 (define-key ctl-k-map "\C-m" 'indent-comment-line)		; ^K^M
 (define-key ctl-k-map "\C-o" 'kill-rectangle)			; ^K^N
 (define-key ctl-k-map "\C-c" 'find-file-other-window)		; ^K^O
-;;(define-key ctl-k-map "\C-x" 'ws-print-buffer)                ; ^K^P
-(define-key ctl-k-map "\034" 'kill-buffer-without-save)         ; ^K^Q
-;;(define-key ctl-k-map "\C-r" ')			    	; ^K^R
-(define-key ctl-k-map "\C-b" 'save-buffer)                      ; ^K^S
-;;(define-key ctl-b-map "\C-t" ')			    	; ^K^T
-;;(define-key ctl-b-map "\C-u" )			    	; ^K^U
-;;(define-key ctl-b-map "\C-v" ')			    	; ^K^V
+;;(define-key ctl-k-map "\C-x" 'ws-print-buffer)		; ^K^P
+(define-key ctl-k-map "\034" 'kill-buffer-without-save)	; ^K^Q
+;;(define-key ctl-k-map "\C-r" ')				; ^K^R
+(define-key ctl-k-map "\C-b" 'save-buffer)			; ^K^S
+;;(define-key ctl-b-map "\C-t" ')				; ^K^T
+;;(define-key ctl-b-map "\C-u" )				; ^K^U
+;;(define-key ctl-b-map "\C-v" ')				; ^K^V
 (define-key ctl-k-map "\C-w" 'save-buffer)			; ^K^W
 (define-key ctl-k-map "\C-n" 'save-buffer-kill-buffer)		; ^K^X
 (define-key ctl-k-map "\C-k" 'kill-region)			; ^K^Y
-;;(define-key ctl-k-map "\C-z" ')		    	    	; ^K^Z
-;;(define-key ctl-k-map "\C-j" ')			    	; ^K^\
-;;(define-key ctl-k-map "\C-g" ')		    	    	; ^K ESC
-;;(define-key ctl-k-map "\027" ')		    	    	; ^K^]
-;;(define-key ctl-k-map "\036" ')		    	    	; ^K^^
+;;(define-key ctl-k-map "\C-z" ')				; ^K^Z
+;;(define-key ctl-k-map "\C-j" ')				; ^K^\
+;;(define-key ctl-k-map "\C-g" ')				; ^K ESC
+;;(define-key ctl-k-map "\027" ')				; ^K^]
+;;(define-key ctl-k-map "\036" ')				; ^K^^
 ;;;
 ;;; ^Q キーマップ
 ;;;
@@ -365,43 +336,43 @@ line に行くように変更するための lisp 関数"
 (define-key ctl-q-map "a"    'query-replace-regexp)		; ^Qa
 (define-key ctl-q-map "d"    'end-of-line)			; ^Qs
 (define-key ctl-q-map "f"    'isearch-backward-regexp)		; ^Qf
-(define-key ctl-q-map "i"    'quoted-insert)                    ; ^Qi
+(define-key ctl-q-map "i"    'quoted-insert)			; ^Qi
 (define-key ctl-q-map "l"    'hunt-forward)			; ^Ql
 (define-key ctl-q-map "q"    'what-cursor-position)		; ^Qq
 (define-key ctl-q-map "s"    'beginning-of-line)		; ^Qd
 (define-key ctl-q-map "="    'what-cursor-position)		; ^Q=
 (define-key ctl-q-map "\\"   'quoted-insert)			; ^Q\
 (define-key ctl-q-map "\C-a" 'replace-regexp)			; ^Q^A
-(define-key ctl-q-map "\C-s" 'indent-region)                    ; ^Q^B
+(define-key ctl-q-map "\C-s" 'indent-region)			; ^Q^B
 (define-key ctl-q-map "\C-e" 'end-of-buffer)			; ^Q^C
 (define-key ctl-q-map "\C-f" 'ws-end-of-line)			; ^Q^D
-;;(define-key ctl-q-map "\C-p" ')			    	; ^Q^E
+;;(define-key ctl-q-map "\C-p" ')				; ^Q^E
 (define-key ctl-q-map "\C-]" 'isearch-forward-regexp)		; ^Q^F
-;;(define-key ctl-q-map "\C-f" ')			    	; ^Q^G
+;;(define-key ctl-q-map "\C-f" ')				; ^Q^G
 (define-key ctl-q-map "\177" 'kill-to-beginning-of-line)	; ^Q^H
-;;(define-key ctl-q-map "\t"   ')		    	    	; ^Q^I
+;;(define-key ctl-q-map "\t"   ')				; ^Q^I
 (define-key ctl-q-map "\C-h" 'goto-line)			; ^Q^J
-;;(define-key ctl-b-map "\C-y" )			    	; ^Q^K
+;;(define-key ctl-b-map "\C-y" )				; ^Q^K
 (define-key ctl-q-map "\C-l" 'hunt-backward-regexp)		; ^Q^L
-(define-key ctl-q-map "\C-n" esc-map)                           ; ^Q^M
-;;(define-key ctl-q-map "\C-o" ')			    	; ^Q^N
-;;(define-key ctl-q-map "\C-c" ')			    	; ^Q^O
-;;(define-key ctl-q-map "\C-x" ')			    	; ^Q^P
+(define-key ctl-q-map "\C-n" esc-map)				; ^Q^M
+;;(define-key ctl-q-map "\C-o" ')				; ^Q^N
+;;(define-key ctl-q-map "\C-c" ')				; ^Q^O
+;;(define-key ctl-q-map "\C-x" ')				; ^Q^P
 (define-key ctl-q-map "\034" 'what-line)			; ^Q^Q
 (define-key ctl-q-map "\C-r" 'beginning-of-buffer)		; ^Q^R
 (define-key ctl-q-map "\C-b" 'ws-beginning-of-line)		; ^Q^S
-(define-key ctl-q-map "\t"   'tab-to-tab-stop)                  ; ^Q^T
-;;(define-key ctl-q-map "\C-u" )			    	; ^Q^U
-;;(define-key ctl-q-map "\C-v" ')			    	; ^Q^V
-;;(define-key ctl-q-map "\C-w" ')		    	    	; ^Q^W
-(define-key ctl-q-map "\C-n" 'execute-extended-command)         ; ^Q^X
+(define-key ctl-q-map "\t"   'tab-to-tab-stop)			; ^Q^T
+;;(define-key ctl-q-map "\C-u" )				; ^Q^U
+;;(define-key ctl-q-map "\C-v" ')				; ^Q^V
+;;(define-key ctl-q-map "\C-w" ')				; ^Q^W
+(define-key ctl-q-map "\C-n" 'execute-extended-command)	; ^Q^X
 (define-key ctl-q-map "\C-k" 'kill-line)			; ^Q^Y
-;;(define-key ctl-q-map "\C-z" ')		    	    	; ^Q^Z
+;;(define-key ctl-q-map "\C-z" ')				; ^Q^Z
 (define-key ctl-q-map "\C-j" 'quoted-insert-org)		; ^Q^\
-;;(define-key ctl-b-map "\C-g" ')		    	    	; ^Q ESC
-;;(define-key ctl-b-map "\C-q" ')		    	    	; ^Q^\
-;;(define-key ctl-b-map "\027" ')		    	    	; ^Q^]
-;;(define-key ctl-b-map "\036" ')		    	    	; ^Q^^
+;;(define-key ctl-b-map "\C-g" ')				; ^Q ESC
+;;(define-key ctl-b-map "\C-q" ')				; ^Q^\
+;;(define-key ctl-b-map "\027" ')				; ^Q^]
+;;(define-key ctl-b-map "\036" ')				; ^Q^^
 
 ;;;
 ;;; ^U キーマップの定義
@@ -418,9 +389,9 @@ line に行くように変更するための lisp 関数"
 
 ;;;
 ;;; ^X キーマップの定義
-(define-key ctl-x-map "c"    'eval-print-last-sexp)    	    	; ^Pc
+(define-key ctl-x-map "c"    'eval-print-last-sexp)		; ^Pc
 ;;; ついうっかり押してしまうことが多いので disable する
-(define-key ctl-x-map "\C-c" nil)   	    	    	    	; ^P^O
+(define-key ctl-x-map "\C-c" nil)				; ^P^O
 
 ;;;
 ;;; グローバルキーマップの定義
@@ -438,7 +409,7 @@ line に行くように変更するための lisp 関数"
 (define-key global-map "\C-y" ctl-k-map)			; ^K
 (define-key global-map "\C-l" 'hunt-forward-regexp)		; ^L
 (define-key global-map "\C-m" 'newline-and-indent)		; ^M
-(define-key global-map "\C-o" 'newline)				; ^N
+(define-key global-map "\C-o" 'newline)			; ^N
 ;;;								; ^O
 ;;;								; ^P
 (define-key global-map "\034" ctl-q-map)			; ^Q
@@ -451,7 +422,7 @@ line に行くように変更するための lisp 関数"
 (define-key global-map "\C-n" 'next-window-line)		; ^X
 (define-key global-map "\C-k" 'kill-one-line)			; ^Y
 (define-key global-map "\C-z" 'scroll-up-1-line)		; ^Z
-;;(define-key global-map "\C-q" 'quoted-insert)			; ^\
+;;(define-key global-map "\C-q" 'quoted-insert)		; ^\
 (define-key global-map "\036" 'call-last-kbd-macro)		; ^^
 (define-key global-map "\037" 'delete-char)			; DEL
 
@@ -462,9 +433,9 @@ line に行くように変更するための lisp 関数"
 (define-key isearch-mode-map "\C-l" 'isearch-repeat-forward)	; ^L
 (define-key isearch-mode-map "\C-n" 'isearch-repeat-forward)	; ^X
 (define-key isearch-mode-map "\M-e" 'isearch-ring-retreat)	; M-e
-(define-key isearch-mode-map "\M-k" 'isearch-yank-kill)		; M-k
+(define-key isearch-mode-map "\M-k" 'isearch-yank-kill)	; M-k
 (define-key isearch-mode-map "\M-x" 'isearch-ring-advance)	; M-x
-(define-key isearch-mode-map "\M-\t" 'isearch-complete)		; M-^I
+(define-key isearch-mode-map "\M-\t" 'isearch-complete)	; M-^I
 
 
 (provide 'ws)
