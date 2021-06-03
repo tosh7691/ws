@@ -11,6 +11,7 @@
 ;;
 ;;--------  keyboard-translate-table の変更 --
 ;;
+;; HACK: 古いemacs用のコードが残っているので削除が必要
 (if (boundp `xemacs-betaname)
     (progn (keyboard-translate ?\^b ?\^s)	; ^B ^S
 	   (keyboard-translate ?\^c ?\^e)	; ^C ^E
