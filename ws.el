@@ -11,27 +11,57 @@
 ;;
 ;;--------  keyboard-translate-table の変更 --
 ;;
-(keyboard-translate ?\^c ?\^e)		; ^C ^E
-(keyboard-translate ?\^d ?\^f)		; ^D ^F
-(keyboard-translate ?\^e ?\^p)		; ^E ^P
-(keyboard-translate ?\^f 29)		; ^F ^]
-(keyboard-translate ?\^g ?\^d)		; ^G ^D
-(keyboard-translate ?\^h 127)		; ^H DEL
-(keyboard-translate ?\^j ?\^h)		; LFD ^H
-(keyboard-translate ?\^k ?\^y)		; ^K ^Y
-(keyboard-translate ?\^n ?\^o)		; ^N ^O
-(keyboard-translate 27 ?\^g)		; ESC ^G
-(keyboard-translate ?\^o ?\^c)		; ^O ^C
-(keyboard-translate ?\^p ?\^x)		; ^P ^X
-(keyboard-translate ?\^q 28)		; ^Q ^\
-(keyboard-translate ?\^s ?\^b)		; ^S ^B
-(keyboard-translate ?\^x ?\^n)		; ^X ^N
-(keyboard-translate ?\^y ?\^k)		; ^Y ^K
-(keyboard-translate ?\^n ?\^o)		; ^N ^O
-(keyboard-translate 28 ?\^q)		; ^\ ^q
-(keyboard-translate 29 27)		; ^] ESC
-(keyboard-translate 127 ?\^j)		; DEL LFD
-
+;; HACK: 古いemacs用のコードが残っているので削除が必要
+(if (boundp `xemacs-betaname)
+    (progn (keyboard-translate ?\^b ?\^s)	; ^B ^S
+	   (keyboard-translate ?\^c ?\^e)	; ^C ^E
+	   (keyboard-translate ?\^d ?\^f)	; ^D ^F
+	   (keyboard-translate ?\^e ?\^p)	; ^E ^P
+	   (keyboard-translate ?\^f 29)	; ^F ^]
+	   (keyboard-translate ?\^g ?\^d)	; ^G ^D
+	   (keyboard-translate ?\^h 127)	; ^H DEL
+	   (keyboard-translate ?\^j ?\^h)	; LFD ^H
+	   (keyboard-translate ?\^k ?\^y)	; ^K ^Y
+	   (keyboard-translate ?\^n ?\^o)	; ^N ^O
+	   (keyboard-translate 27 ?\^g)		; ESC ^G
+	   (keyboard-translate ?\^o ?\^c)	; ^O ^C
+	   (keyboard-translate ?\^p ?\^x)	; ^P ^X
+	   (keyboard-translate ?\^q 28)		; ^Q ^\
+	   (keyboard-translate ?\^s ?\^b)	; ^S ^B
+	   (keyboard-translate ?\^x ?\^n)	; ^X ^N
+	   (keyboard-translate ?\^y ?\^k)	; ^Y ^K
+	   (keyboard-translate ?\^n ?\^o)	; ^N ^O
+	   (keyboard-translate 28 ?\^q)		; ^\ ^q
+	   (keyboard-translate 29 27)		; ^] ESC
+	   (keyboard-translate 127 ?\^j))	; DEL LFD
+  (let ((the-table (make-string 128 0)))
+       (let ((i 0))
+	 (while (< i 128)
+	   (aset the-table i i)
+	   (setq i (1+ i))))
+       (aset the-table ?\^b ?\^s)		; ^B ^S
+       (aset the-table ?\^c ?\^e)		; ^C ^E
+       (aset the-table ?\^d ?\^f)		; ^D ^F
+       (aset the-table ?\^e ?\^p)		; ^E ^P
+       (aset the-table ?\^f 29)			; ^F ^]
+       (aset the-table ?\^g ?\^d)		; ^G ^D
+       (aset the-table ?\^h 127)		; ^H DEL
+       (aset the-table ?\^j ?\^h)		; LFD ^H
+       (aset the-table ?\^k ?\^y)		; ^K ^Y
+       (aset the-table ?\^n ?\^o)		; ^N ^O
+       (aset the-table 27 ?\^g)			; ESC ^G
+       (aset the-table ?\^o ?\^c)		; ^O ^C
+       (aset the-table ?\^p ?\^x)		; ^P ^X
+       (aset the-table ?\^q 28)			; ^Q ^\
+       (aset the-table ?\^s ?\^b)		; ^S ^B
+       (aset the-table ?\^x ?\^n)		; ^X ^N
+       (aset the-table ?\^y ?\^k)		; ^Y ^K
+       (aset the-table ?\^n ?\^o)		; ^N ^O
+       (aset the-table 28 ?\^q)			; ^\ ^q
+       (aset the-table 29 27)			; ^] ESC
+       (aset the-table 127 ?\^j)		; DEL LFD
+       (setq keyboard-translate-table the-table))
+)
 ;;
 ;;-------- 関数定義 --------------------------
 ;
@@ -299,7 +329,7 @@ line に行くように変更するための lisp 関数"
 (define-key ctl-k-map "\C-o" 'kill-rectangle)			; ^K^N
 (define-key ctl-k-map "\C-c" 'find-file-other-window)		; ^K^O
 ;;(define-key ctl-k-map "\C-x" 'ws-print-buffer)		; ^K^P
-(define-key ctl-k-map "\034" 'kill-buffer-without-save)	; ^K^Q
+(define-key ctl-k-map "\034" 'kill-buffer-without-save)		; ^K^Q
 ;;(define-key ctl-k-map "\C-r" ')				; ^K^R
 (define-key ctl-k-map "\C-b" 'save-buffer)			; ^K^S
 ;;(define-key ctl-b-map "\C-t" ')				; ^K^T
@@ -362,8 +392,8 @@ line に行くように変更するための lisp 関数"
 ;;; ^U キーマップの定義
 ;;;
 (defvar ctl-u-map (make-sparse-keymap))
-(define-key ctl-u-map "a"    'boss-goes-away)			; ^Ua
-(define-key ctl-u-map "b"    'boss-has-come)			; ^Ub
+;; (define-key ctl-u-map "a"    'boss-goes-away)		; ^Ua
+;; (define-key ctl-u-map "b"    'boss-has-come)		; ^Ub
 (define-key ctl-u-map "o"    'outline-minor-mode)		; ^Uo
 (define-key ctl-u-map "\C-a" 'universal-argument)		; ^U^A
 (define-key ctl-u-map "\C-s" 'buffer-menu)			; ^U^B
